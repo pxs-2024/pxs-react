@@ -22,7 +22,7 @@
     "skipLibCheck": true,
     "baseUrl": "./packages",
     "paths": {
-      "hostConfig":["./react-dom/src/hostConfig.ts"]
+      "HostConfig":["./react-reconciler/src/HostConfig.ts"]
     }
   }
 }
