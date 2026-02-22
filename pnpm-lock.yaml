@@ -4,10 +4,16 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  react: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
+
 importers:
 
   .:
     dependencies:
+      react:
+        specifier: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
+        version: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
       scheduler:
         specifier: 0.23.0
         version: 0.23.0
@@ -95,7 +101,7 @@ importers:
         version: 29.7.0
       jest-react:
         specifier: ^0.14.0
-        version: 0.14.2(jest@29.7.0(@types/node@25.3.0))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.14.2(jest@29.7.0(@types/node@25.3.0))(react-test-renderer@18.3.1(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react))(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react)
       prettier:
         specifier: ^3.5.3
         version: 3.8.1
@@ -121,7 +127,29 @@ importers:
         specifier: ^6.2.0
         version: 6.4.1(@types/node@25.3.0)(jiti@2.6.1)
 
-  packages/react: {}
+  packages/react:
+    dependencies:
+      shared:
+        specifier: 'workspace: *'
+        version: link:../shared
+
+  packages/react-dom:
+    dependencies:
+      react:
+        specifier: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
+        version: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
+      react-reconciler:
+        specifier: 'workspace: *'
+        version: link:../react-reconciler
+      shared:
+        specifier: 'workspace: *'
+        version: link:../shared
+
+  packages/react-reconciler:
+    dependencies:
+      shared:
+        specifier: 'workspace: *'
+        version: link:../shared
 
   packages/shared: {}
 
@@ -2735,10 +2763,6 @@ packages:
     resolution: {integrity: sha512-KkAgygexHUkQqtvvx/otwxtuFu5cVjfzTCtjXLH9boS19/Nbtg84zS7wIQn39G8IlrhThBpQsMKkq5ZHZIYFXA==}
     peerDependencies:
       react: ^18.3.1
-
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
-    engines: {node: '>=0.10.0'}
 
   read-pkg@5.2.0:
     resolution: {integrity: sha512-Ug69mNOpfvKDAc2Q8DRpMjjzdtrnv9HcSMX+4VsZxD1aZ6ZzrIE7rlzXBtWTyhULSMKg076AW6WR5iZpD0JiOg==}
@@ -5709,11 +5733,11 @@ snapshots:
     optionalDependencies:
       jest-resolve: 29.7.0
 
-  jest-react@0.14.2(jest@29.7.0(@types/node@25.3.0))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1):
+  jest-react@0.14.2(jest@29.7.0(@types/node@25.3.0))(react-test-renderer@18.3.1(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react))(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react):
     dependencies:
       jest: 29.7.0(@types/node@25.3.0)
-      react: 18.3.1
-      react-test-renderer: 18.3.1(react@18.3.1)
+      react: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
+      react-test-renderer: 18.3.1(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react)
 
   jest-regex-util@29.6.3: {}
 
@@ -6198,22 +6222,18 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-shallow-renderer@16.15.0(react@18.3.1):
+  react-shallow-renderer@16.15.0(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react):
     dependencies:
       object-assign: 4.1.1
-      react: 18.3.1
+      react: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
       react-is: 18.3.1
 
-  react-test-renderer@18.3.1(react@18.3.1):
+  react-test-renderer@18.3.1(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react):
     dependencies:
-      react: 18.3.1
+      react: link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react
       react-is: 18.3.1
-      react-shallow-renderer: 16.15.0(react@18.3.1)
+      react-shallow-renderer: 16.15.0(react@C+Users+lo101+AppData+Local+pnpm+global+5+node_modules+react)
       scheduler: 0.23.2
-
-  react@18.3.1:
-    dependencies:
-      loose-envify: 1.4.0
 
   read-pkg@5.2.0:
     dependencies:

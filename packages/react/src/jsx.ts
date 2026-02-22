@@ -21,7 +21,8 @@ const ReactElement = function (
 		type,
 		key,
 		ref,
-		props
+		props,
+		__mark: 'pxs'
 	};
 	return element;
 };
@@ -66,4 +67,20 @@ export const jsx = (
 	return ReactElement(type, key, ref, props);
 };
 
-export const jsxDev = jsx;
+export const jsxDEV = (type: ElementType, config: any, key: Key = null) => {
+	const props: Props = {};
+	let ref: Ref | null = null;
+	for (const prop in config) {
+		const val = config[prop];
+		if (prop === 'ref') {
+			if (val !== undefined) {
+				ref = val;
+			}
+			continue;
+		}
+		if ({}.hasOwnProperty.call(config, prop)) {
+			props[prop] = val;
+		}
+	}
+	return ReactElement(type, key, ref as Ref, props);
+};

@@ -40,8 +40,8 @@
     "jest": "^29.6.2",
     "jest-config": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
-    "prettier": "^3.5.3",
     "jest-react": "^0.14.0",
+    "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.36.0",
     "rollup-plugin-generate-package-json": "^3.2.0",
@@ -51,6 +51,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "react": "link:C:/Users/lo101/AppData/Local/pnpm/global/5/node_modules/react",
     "scheduler": "0.23.0"
   }
 }

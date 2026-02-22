@@ -1,6 +1,8 @@
 import { beginWork } from './BeginWork';
+import { commitMutationEffects } from './CommitWork';
 import { completeWork } from './CompleteWork';
 import { createWorkInProgress, FiberNode, FiberRootNode } from './Fiber';
+import { MutationMask, NoFlags } from './FiberFlags';
 import { HostRoot } from './WorkTag';
 
 let workInProgress: FiberNode | null = null;
@@ -12,7 +14,7 @@ function prepareFreshStack(root: FiberRootNode) {
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	// todo 调度功能
 	const root = markUpdateFromFiberToRoot(fiber);
-	renderRoot(root);
+	renderRoot(root as FiberRootNode);
 }
 
 function markUpdateFromFiberToRoot(fiber: FiberNode): FiberRootNode | null {
@@ -48,6 +50,35 @@ function renderRoot(root: FiberRootNode) {
 	commitRoot(root);
 }
 
+function commitRoot(root: FiberRootNode) {
+	const finishedWork = root.finishedWork;
+	if (finishedWork === null) {
+		return;
+	}
+	if (__DEV__) {
+		console.warn('commit阶段开始', finishedWork);
+	}
+
+	// 重置操作
+	root.finishedWork = null;
+
+	// 判断3个子阶段需要执行的操作
+
+	const subtreeHasEffect =
+		(finishedWork.subtreeFlags & MutationMask) !== NoFlags;
+	const rootHasEffect = (finishedWork.flags & MutationMask) !== NoFlags;
+	if (subtreeHasEffect || rootHasEffect) {
+		// beforeMutation
+		// mutation placement
+		commitMutationEffects(finishedWork);
+		root.current = finishedWork;
+
+		// layout
+	} else {
+		root.current = finishedWork;
+	}
+}
+
 function workLoop() {
 	while (workInProgress !== null) {
 		performUnitOfWork(workInProgress);
@@ -60,6 +91,8 @@ function performUnitOfWork(fiber: FiberNode) {
 
 	if (next === null) {
 		completeUnitOfWork(fiber);
+	} else {
+		workInProgress = next;
 	}
 }
 
@@ -72,6 +105,7 @@ function completeUnitOfWork(fiber: FiberNode) {
 			workInProgress = sibling;
 			return;
 		}
-		node = node?.return;
+		node = node.return;
+		workInProgress = node;
 	} while (node !== null);
 }

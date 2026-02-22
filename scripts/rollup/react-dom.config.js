@@ -49,21 +49,21 @@ export default [
 				})
 			})
 		]
-	},
+	}
 
 	// react-test-utils
 
-	{
-		input: `${pkgPath}/test-utils.ts`,
-		output: [
-			{
-				file: `${pkgDistPath}/test-utils.js`,
-				name: 'testUtils',
-				format: 'umd'
-			}
-		],
-		// 在react-dom包中排除掉react包，防止出现两个一样的共享数据对象
-		external: ['react-dom', 'react'],
-		plugins: getBaseRollupPlugins()
-	}
+	// {
+	// 	input: `${pkgPath}/test-utils.ts`,
+	// 	output: [
+	// 		{
+	// 			file: `${pkgDistPath}/test-utils.js`,
+	// 			name: 'testUtils',
+	// 			format: 'umd'
+	// 		}
+	// 	],
+	// 	// 在react-dom包中排除掉react包，防止出现两个一样的共享数据对象
+	// 	external: ['react-dom', 'react'],
+	// 	plugins: getBaseRollupPlugins()
+	// }
 ];

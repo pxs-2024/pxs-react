@@ -57,7 +57,7 @@ export const createWorkInProgress = (
 		wip.stateNode = current.stateNode;
 		// 和current绑定
 		wip.alternate = current;
-		current.alternate = current;
+		current.alternate = wip;
 	} else {
 		// update
 		wip.pendingProps = pendingProps;

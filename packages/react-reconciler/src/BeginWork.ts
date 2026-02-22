@@ -5,8 +5,14 @@
 import { ReactElement } from 'shared/ReactTypes';
 import { FiberNode } from './Fiber';
 import { processUpdateQueue, Update, UpdateQueue } from './UpdateQueue';
-import { HostComponent, HostRoot, HostText } from './WorkTag';
+import {
+	FunctionComponent,
+	HostComponent,
+	HostRoot,
+	HostText
+} from './WorkTag';
 import { mountChildFibers, reconcileChildFibers } from './ChildFibers';
+import { renderWithHooks } from './FiberHooks';
 
 export const beginWork = (wip: FiberNode) => {
 	// 比较，返回子fiberNode  子FiberNode
@@ -19,6 +25,8 @@ export const beginWork = (wip: FiberNode) => {
 		case HostText:
 			// 没有子节点
 			return null;
+		case FunctionComponent:
+			return updateFunctionComponent(wip);
 		default:
 			if (__DEV__) {
 				console.warn('beginWork未实现的类型');
@@ -26,6 +34,12 @@ export const beginWork = (wip: FiberNode) => {
 	}
 	return null;
 };
+
+function updateFunctionComponent(wip: FiberNode) {
+	const nextChildren = renderWithHooks(wip);
+	reconcileChildren(wip, nextChildren);
+	return wip.child;
+}
 
 function updateHostRoot(wip: FiberNode) {
 	const baseState = wip.memoizedState;
@@ -54,6 +68,6 @@ function reconcileChildren(wip: FiberNode, children?: ReactElement) {
 		wip.child = reconcileChildFibers(wip, current?.child, children);
 	} else {
 		// mount
-		mountChildFibers(wip, null, children);
+		wip.child = mountChildFibers(wip, null, children);
 	}
 }
