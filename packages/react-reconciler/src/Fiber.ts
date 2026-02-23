@@ -20,11 +20,12 @@ export class FiberNode {
 	memoizedProps: Props = null;
 	memoizedState: any = null;
 	alternate: FiberNode | null = null;
-	updateQueue: unknown = null;
 
 	// 副作用
 	flags: Flags = NoFlags;
 	subtreeFlags: Flags = NoFlags;
+	updateQueue: unknown = null;
+	deletions: FiberNode[] | null = null;
 
 	constructor(
 		public tag: WorkTag,
@@ -62,6 +63,8 @@ export const createWorkInProgress = (
 		// update
 		wip.pendingProps = pendingProps;
 		wip.flags = NoFlags;
+		wip.subtreeFlags = NoFlags;
+		wip.deletions = null;
 	}
 	wip.type = current.type;
 	wip.updateQueue = current.updateQueue;

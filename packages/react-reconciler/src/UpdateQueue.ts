@@ -1,3 +1,4 @@
+import { Dispatch } from 'react/src/currentDispatcher';
 import { Action } from 'shared/ReactTypes';
 
 export interface Update<State> {
@@ -8,6 +9,7 @@ export interface UpdateQueue<State> {
 	shared: {
 		pending: Update<State> | null;
 	};
+	dispatch: Dispatch<State> | null;
 }
 
 // 创建update
@@ -20,10 +22,11 @@ export const createUpdate = <State>(action: Action<State>): Update<State> => {
 // 创建updateQueue
 export const createUpdateQueue = <State>(): UpdateQueue<State> => {
 	return {
-		// 为什么及哦啊shared 因为被current和workingProgress 共同使用
+		// 为什么叫shared 因为被current和workingProgress 共同使用
 		shared: {
 			pending: null
-		}
+		},
+		dispatch: null
 	};
 };
 

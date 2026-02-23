@@ -11,7 +11,8 @@ import {
 	HostRoot,
 	HostText
 } from './WorkTag';
-import { NoFlags } from './FiberFlags';
+import { NoFlags, Update } from './FiberFlags';
+import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
 
 /**
  * completeWork 需要做什么
@@ -22,6 +23,10 @@ import { NoFlags } from './FiberFlags';
  * flags分布在不同的fiberNode中，如何快速找到他们？
  * 利用complete向上便历的流程，将子fiberNode的flags冒泡到父fiberNode
  */
+
+function markUpdate(fiber: FiberNode) {
+	fiber.flags |= Update;
+}
 
 export const completeWork = (wip: FiberNode) => {
 	// 递归中的归
@@ -34,6 +39,9 @@ export const completeWork = (wip: FiberNode) => {
 		case HostComponent:
 			if (current !== null && wip.stateNode) {
 				//  update
+				// props 是否变化
+				//
+				updateFiberProps(wip.stateNode, newProps);
 			} else {
 				// mount
 				// 1.构建dom树
@@ -47,6 +55,11 @@ export const completeWork = (wip: FiberNode) => {
 		case HostText:
 			if (current !== null && wip.stateNode) {
 				//  update
+				const oldText = current.memoizedProps.content;
+				const newText = newProps.content;
+				if (oldText !== newText) {
+					markUpdate(wip);
+				}
 			} else {
 				// mount
 				// 1.构建dom树
