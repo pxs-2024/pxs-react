@@ -5,4 +5,9 @@ export const Placement = 0b0000001;
 export const Update = 0b00000010;
 export const ChildDeletion = 0b00000100;
 
+// 本次更新当前fiber存在需要执行的effect
+export const PassiveEffect = 0b000001000;
+
 export const MutationMask = Placement | Update | ChildDeletion;
+
+export const PassiveMask = PassiveEffect | ChildDeletion;

@@ -1,28 +1,40 @@
 import { createRoot } from 'react-dom/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+function Child() {
+	const [num, updateNum] = useState(0);
+
+	useEffect(() => {
+		console.log('>>>>child mount');
+		return () => {
+			console.log('>>>>child unmount');
+		};
+	}, []);
+
+	return <div>2</div>;
+}
 
 function App() {
 	const [num, setNum] = useState(0);
+	useEffect(() => {
+		console.log('>>>>app mount');
+	}, []);
 
-	const arr =
-		num % 2 === 0
-			? [<li key={1}>1</li>, <li key={2}>2</li>, <li key={3}>3</li>]
-			: [];
+	useEffect(() => {
+		console.log('>>>> num change create');
+		return () => {
+			console.log('>>>> num change destroy');
+		};
+	}, [num]);
 
 	return (
-		<ul
+		<div
 			onClick={() => {
 				setNum(num + 1);
 			}}
 		>
-			<>
-				<li>1</li>
-				<li>2</li>
-			</>
-			<li>3</li>
-			<li>4</li>
-			{arr}
-		</ul>
+			{(num & 1) === 0 ? <Child></Child> : null}
+		</div>
 	);
 }
 
