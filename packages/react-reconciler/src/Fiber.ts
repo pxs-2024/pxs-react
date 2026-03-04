@@ -4,6 +4,7 @@ import { Flags, NoFlags } from './FiberFlags';
 import { Container } from 'HostConfig';
 import { Lanes, Lane, NoLane, NoLanes } from './FiberLane';
 import { Effect } from './FiberHooks';
+import { CallbackNode } from 'scheduler';
 
 export class FiberNode {
 	stateNode: any = null;
@@ -51,6 +52,8 @@ export class FiberRootNode {
 		umount: [],
 		update: []
 	};
+	callbackNode: CallbackNode | null = null;
+	callbackPriority: Lane = NoLane;
 
 	constructor(
 		public container: Container,
