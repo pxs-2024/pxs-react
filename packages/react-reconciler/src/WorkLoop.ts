@@ -196,7 +196,7 @@ function performConcurrentWorkOnRoot(
 	}
 }
 
-function renderRoot(root: FiberRootNode, lane: Lane, shouldTimeSlice: boolena) {
+function renderRoot(root: FiberRootNode, lane: Lane, shouldTimeSlice: boolean) {
 	if (__DEV__) {
 		console.log(`开始${shouldTimeSlice ? '并发' : '同步'}更新`, root);
 	}
