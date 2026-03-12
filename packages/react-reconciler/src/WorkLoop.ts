@@ -337,3 +337,4 @@ function completeUnitOfWork(fiber: FiberNode) {
 		workInProgress = node;
 	} while (node !== null);
 }
+
